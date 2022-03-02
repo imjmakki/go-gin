@@ -17,4 +17,5 @@ func Logger() gin.HandlerFunc {
 			param.Latency,
 		)
 	})
+	return nil
 }
