@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"io"
+	"os"
 	"prac/controller"
 	"prac/middlewares"
 	"prac/service"
@@ -12,7 +14,14 @@ var (
 	videoController controller.VideoController = controller.New(videoService)
 )
 
+func setupLogOutput() {
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter := io.MultiWriter(f, os.Stdout)
+}
+
 func main() {
+	setupLogOutput()
+
 	server := gin.New()
 
 	server.Use(gin.Recovery(), middlewares.Logger())
